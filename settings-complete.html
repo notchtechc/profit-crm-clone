@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vice CRM - الإعدادات</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="settings-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .dashboard { display: block !important; }
+    </style>
+</head>
+<body>
+    <div class="dashboard active">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="dashboard-logo">
+                    <div class="vice-logo">
+                        <span id="systemName">Vice</span>
+                        <span class="crm-badge" id="systemBadge">CRM</span>
+                    </div>
+                </div>
+                
+                <nav class="main-nav">
+                    <a href="dashboard.html" class="nav-item">لوحة التحكم</a>
+                    <a href="marketing.html" class="nav-item dropdown">التسويق</a>
+                    <a href="sales.html" class="nav-item dropdown">المبيعات</a>
+                    <a href="inventory.html" class="nav-item dropdown">المخزون</a>
+                    <a href="client.html" class="nav-item">العملاء</a>
+                    <a href="reports.html" class="nav-item dropdown">التقارير</a>
+                    <a href="network.html" class="nav-item dropdown">الشبكة</a>
+                    <a href="settings.html" class="nav-item active">الإعدادات</a>
+                </nav>
+                
+                <div class="user-section">
+                    <div class="user-actions">
+                        <button class="action-btn" title="البحث"><i class="fas fa-search"></i></button>
+                        <button class="action-btn" title="الإشعارات"><i class="fas fa-bell"></i></button>
+                        <button class="action-btn" title="الرسائل"><i class="fas fa-envelope"></i></button>
+                        <button class="action-btn" title="التقويم"><i class="fas fa-calendar"></i></button>
+                        <button class="action-btn" title="المهام"><i class="fas fa-tasks"></i></button>
+                        <button class="action-btn" title="التحميل"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="user-info">
+                        <span>مرحباً، محمود</span>
+                        <div class="user-avatar">م</div>
+                        <button class="action-btn" title="تسجيل الخروج"><i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+                    <button class="menu-toggle" onclick="toggleMobileSidebar()"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard.html"><i class="fas fa-chart-line"></i> لوحة التحكم</a></li>
+                    <li><a href="marketing.html"><i class="fas fa-bullhorn"></i> التسويق</a></li>
+                    <li><a href="sales.html"><i class="fas fa-handshake"></i> المبيعات</a></li>
+                    <li><a href="inventory.html"><i class="fas fa-boxes"></i> المخزون</a></li>
+                    <li><a href="client.html"><i class="fas fa-users"></i> العملاء</a></li>
+                    <li><a href="reports.html"><i class="fas fa-file-alt"></i> التقارير</a></li>
+                    <li><a href="network.html"><i class="fas fa-network-wired"></i> الشبكة</a></li>
+                    <li><a href="settings.html" class="active"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="page-header">
+                    <div class="breadcrumb">
+                        <a href="dashboard.html">لوحة التحكم</a>
+                        <i class="fas fa-chevron-left"></i>
+                        <span>الإعدادات</span>
+                    </div>
+                    <h1 class="page-title">إعدادات النظام</h1>
+                    <div class="page-actions">
+                        <button class="btn btn-success" onclick="saveAllSettings()">
+                            <i class="fas fa-save"></i> حفظ جميع الإعدادات
+                        </button>
+                        <button class="btn btn-secondary" onclick="resetToDefaults()">
+                            <i class="fas fa-undo"></i> إعادة تعيين
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Settings Tabs -->
+                <div class="settings-container" style="background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);">
+                    <div class="settings-tabs">
+                        <button class="settings-tab active" onclick="switchSettingsTab('general')">
+                            <i class="fas fa-cog"></i> إعدادات عامة
+                        </button>
+                        <button class="settings-tab" onclick="switchSettingsTab('branding')">
+                            <i class="fas fa-palette"></i> العلامة التجارية
+                        </button>
+                        <button class="settings-tab" onclick="switchSettingsTab('users')">
+                            <i class="fas fa-users"></i> إدارة المستخدمين
+                        </button>
+                        <button class="settings-tab" onclick="switchSettingsTab('security')">
+                            <i class="fas fa-shield-alt"></i> الأمان
+                        </button>
+                        <button class="settings-tab" onclick="switchSettingsTab('backup')">
+                            <i class="fas fa-database"></i> النسخ الاحتياطي
+                        </button>
+                    </div>
+
+                    <!-- General Settings Tab -->
+                    <div id="general-tab" class="settings-tab-content" style="padding: 30px;">
+                        <h3 style="font-size: 1.4rem; font-weight: 600; color: #333; margin-bottom: 25px;">الإعدادات العامة</h3>
+                        <div class="settings-grid">
+                            <div class="settings-section">
+                                <h4 class="section-title">معلومات النظام</h4>
+                                <div class="form-group">
+                                    <label class="form-label">اسم النظام</label>
+                                    <input type="text" id="systemNameInput" value="Vice CRM" class="form-input" placeholder="أدخل اسم النظام">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">إصدار النظام</label>
+                                    <input type="text" id="systemVersion" value="الإصدار 5" class="form-input" placeholder="أدخل إصدار النظام">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">وصف النظام</label>
+                                    <textarea id="systemDescription" rows="3" class="form-input" placeholder="أدخل وصف النظام">إصدار قادة السوق العقاري</textarea>
+                                </div>
+                            </div>
+                            <div class="settings-section">
+                                <h4 class="section-title">اللغة والمنطقة</h4>
+                                <div class="form-group">
+                                    <label class="form-label">اللغة الافتراضية</label>
+                                    <select id="defaultLanguage" class="form-input">
+                                        <option value="ar" selected>العربية</option>
+                                        <option value="en">English</option>
+                                        <option value="fr">Français</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">المنطقة الزمنية</label>
+                                    <select id="timezone" class="form-input">
+                                        <option value="Asia/Riyadh" selected>الرياض (GMT+3)</option>
+                                        <option value="Asia/Dubai">دبي (GMT+4)</option>
+                                        <option value="Africa/Cairo">القاهرة (GMT+2)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">تنسيق التاريخ</label>
+                                    <select id="dateFormat" class="form-input">
+                                        <option value="dd-mm-yyyy" selected>يوم-شهر-سنة</option>
+                                        <option value="mm-dd-yyyy">شهر-يوم-سنة</option>
+                                        <option value="yyyy-mm-dd">سنة-شهر-يوم</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Branding Settings Tab -->
+                    <div id="branding-tab" class="settings-tab-content" style="padding: 30px; display: none;">
+                        <h3 style="font-size: 1.4rem; font-weight: 600; color: #333; margin-bottom: 25px;">إعدادات العلامة التجارية</h3>
+                        <div class="settings-grid">
+                            <div class="settings-section">
+                                <h4 class="section-title">الشعار والهوية</h4>
+                                <div class="form-group">
+                                    <label class="form-label">اسم الشركة</label>
+                                    <input type="text" id="companyName" value="Vice" class="form-input" placeholder="أدخل اسم الشركة">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">شارة النظام</label>
+                                    <input type="text" id="systemBadgeText" value="CRM" class="form-input" placeholder="أدخل شارة النظام">
+                                </div>
+                                <div class="logo-preview">
+                                    <div class="preview-header">معاينة الشعار</div>
+                                    <div class="preview-logo" id="logoPreviewContainer">
+                                        <span id="previewCompanyName">Vice</span>
+                                        <span class="preview-badge" id="previewBadge">CRM</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="settings-section">
+                                <h4 class="section-title">الألوان والثيم</h4>
+                                <div class="color-picker-grid">
+                                    <div class="form-group">
+                                        <label class="form-label">اللون الأساسي</label>
+                                        <div class="color-input-wrapper">
+                                            <input type="color" id="primaryColor" value="#667eea" class="color-input">
+                                            <input type="text" id="primaryColorText" value="#667eea" class="color-text-input" placeholder="#667eea">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">اللون الثانوي</label>
+                                        <div class="color-input-wrapper">
+                                            <input type="color" id="secondaryColor" value="#764ba2" class="color-input">
+                                            <input type="text" id="secondaryColorText" value="#764ba2" class="color-text-input" placeholder="#764ba2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="color-preview" id="colorPreview">
+                                    <div class="preview-header">معاينة الألوان</div>
+                                    <div class="preview-content">هذا مثال على الألوان المختارة</div>
+                                    <div class="preview-buttons">
+                                        <button type="button" class="preview-btn primary">زر أساسي</button>
+                                        <button type="button" class="preview-btn secondary">زر ثانوي</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Users Management Tab -->
+                    <div id="users-tab" class="settings-tab-content" style="padding: 30px; display: none;">
+                        <h3 style="font-size: 1.4rem; font-weight: 600; color: #333; margin-bottom: 25px;">إدارة المستخدمين</h3>
+                        <div class="users-actions" style="margin-bottom: 25px;">
+                            <button class="btn btn-primary" onclick="showAddUserModal()">
+                                <i class="fas fa-user-plus"></i> إضافة مستخدم جديد
+                            </button>
+                        </div>
+                        <div class="users-table" style="background: #f8f9fa; border-radius: 8px; overflow: hidden;">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead style="background: #667eea; color: white;">
+                                    <tr>
+                                        <th style="padding: 15px; text-align: right;">الاسم</th>
+                                        <th style="padding: 15px; text-align: right;">البريد الإلكتروني</th>
+                                        <th style="padding: 15px; text-align: right;">الدور</th>
+                                        <th style="padding: 15px; text-align: right;">الحالة</th>
+                                        <th style="padding: 15px; text-align: right;">الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #dee2e6;">
+                                        <td style="padding: 15px;">محمود أحمد</td>
+                                        <td style="padding: 15px;">mahmoud2@kmg.com</td>
+                                        <td style="padding: 15px;"><span style="background: #28a745; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">مدير النظام</span></td>
+                                        <td style="padding: 15px;"><span style="background: #d4edda; color: #155724; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">نشط</span></td>
+                                        <td style="padding: 15px;">
+                                            <button class="action-icon" style="width: 32px; height: 32px; border: none; border-radius: 6px; background: #e3f2fd; color: #1976d2; cursor: pointer; margin-left: 5px;">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="action-icon" style="width: 32px; height: 32px; border: none; border-radius: 6px; background: #ffebee; color: #d32f2f; cursor: pointer;">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Security Settings Tab -->
+                    <div id="security-tab" class="settings-tab-content" style="padding: 30px; display: none;">
+                        <h3 style="font-size: 1.4rem; font-weight: 600; color: #333; margin-bottom: 25px;">إعدادات الأمان</h3>
+                        <div class="settings-grid">
+                            <div class="settings-section">
+                                <h4 class="section-title">سياسة كلمات المرور</h4>
+                                <div class="form-group">
+                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                        <input type="checkbox" id="requireStrongPassword" checked>
+                                        <span>طلب كلمات مرور قوية</span>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">الحد الأدنى لطول كلمة المرور</label>
+                                    <input type="number" id="minPasswordLength" value="8" min="6" max="20" class="form-input">
+                                </div>
+                            </div>
+                            <div class="settings-section">
+                                <h4 class="section-title">إعدادات الجلسة</h4>
+                                <div class="form-group">
+                                    <label class="form-label">مدة الجلسة (دقائق)</label>
+                                    <input type="number" id="sessionTimeout" value="60" min="15" max="480" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                        <input type="checkbox" id="enableTwoFactor">
+                                        <span>تفعيل المصادقة الثنائية</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Backup Settings Tab -->
+                    <div id="backup-tab" class="settings-tab-content" style="padding: 30px; display: none;">
+                        <h3 style="font-size: 1.4rem; font-weight: 600; color: #333; margin-bottom: 25px;">النسخ الاحتياطي والاستعادة</h3>
+                        <div class="backup-actions" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                            <div class="backup-card" style="background: #f8f9fa; border-radius: 12px; padding: 25px; text-align: center; border: 1px solid #dee2e6;">
+                                <div class="backup-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; color: white; font-size: 1.5rem;">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                                <h4 style="font-size: 1.1rem; font-weight: 600; color: #333; margin-bottom: 10px;">إنشاء نسخة احتياطية</h4>
+                                <p style="color: #6c757d; margin-bottom: 20px; font-size: 0.9rem;">إنشاء نسخة احتياطية كاملة من البيانات</p>
+                                <button class="btn btn-success" onclick="createBackup()" style="width: 100%;">
+                                    <i class="fas fa-download"></i> إنشاء نسخة احتياطية
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Settings Management System
+        let currentSettings = {
+            general: {
+                systemName: 'Vice CRM',
+                systemVersion: 'الإصدار 5',
+                systemDescription: 'إصدار قادة السوق العقاري',
+                defaultLanguage: 'ar',
+                timezone: 'Asia/Riyadh',
+                dateFormat: 'dd-mm-yyyy'
+            },
+            branding: {
+                companyName: 'Vice',
+                systemBadge: 'CRM',
+                primaryColor: '#667eea',
+                secondaryColor: '#764ba2'
+            }
+        };
+
+        // Tab switching functionality
+        function switchSettingsTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.settings-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Hide all tab contents
+            document.querySelectorAll('.settings-tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // Show selected tab
+            const selectedTab = document.querySelector(`[onclick*="${tabName}"]`);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+
+            const selectedContent = document.getElementById(`${tabName}-tab`);
+            if (selectedContent) {
+                selectedContent.style.display = 'block';
+                selectedContent.classList.add('fade-in');
+            }
+        }
+
+        // Real-time preview updates
+        function setupRealtimeUpdates() {
+            // Company name preview
+            const companyNameInput = document.getElementById('companyName');
+            if (companyNameInput) {
+                companyNameInput.addEventListener('input', (e) => {
+                    const previewElement = document.getElementById('previewCompanyName');
+                    const systemNameElement = document.getElementById('systemName');
+                    if (previewElement) previewElement.textContent = e.target.value || 'Vice';
+                    if (systemNameElement) systemNameElement.textContent = e.target.value || 'Vice';
+                });
+            }
+
+            // System badge preview
+            const systemBadgeInput = document.getElementById('systemBadgeText');
+            if (systemBadgeInput) {
+                systemBadgeInput.addEventListener('input', (e) => {
+                    const previewElement = document.getElementById('previewBadge');
+                    const systemBadgeElement = document.getElementById('systemBadge');
+                    if (previewElement) previewElement.textContent = e.target.value || 'CRM';
+                    if (systemBadgeElement) systemBadgeElement.textContent = e.target.value || 'CRM';
+                });
+            }
+
+            // Color preview updates
+            const colorInputs = ['primaryColor', 'secondaryColor'];
+            colorInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                const textInput = document.getElementById(inputId + 'Text');
+                
+                if (input) {
+                    input.addEventListener('input', (e) => {
+                        if (textInput) textInput.value = e.target.value;
+                        updateColorPreview();
+                    });
+                }
+                
+                if (textInput) {
+                    textInput.addEventListener('input', (e) => {
+                        const colorValue = e.target.value;
+                        if (isValidHexColor(colorValue)) {
+                            if (input) input.value = colorValue;
+                            updateColorPreview();
+                        }
+                    });
+                }
+            });
+        }
+
+        // Validate hex color
+        function isValidHexColor(hex) {
+            return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(hex);
+        }
+
+        // Update color preview
+        function updateColorPreview() {
+            const primaryColor = document.getElementById('primaryColor')?.value || '#667eea';
+            const secondaryColor = document.getElementById('secondaryColor')?.value || '#764ba2';
+            
+            const colorPreview = document.getElementById('colorPreview');
+            if (colorPreview) {
+                colorPreview.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; padding: 15px 20px;
+                border-radius: 8px; color: white; z-index: 3000;
+                font-family: 'Cairo', sans-serif; max-width: 300px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                transform: translateX(100%); transition: transform 0.3s ease;
+            `;
+            
+            const colors = {
+                success: '#28a745',
+                error: '#dc3545',
+                warning: '#ffc107',
+                info: '#17a2b8'
+            };
+            
+            notification.style.background = colors[type] || colors.success;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // Save all settings
+        function saveAllSettings() {
+            try {
+                // Collect form data
+                const formData = {
+                    systemName: document.getElementById('systemNameInput')?.value,
+                    companyName: document.getElementById('companyName')?.value,
+                    systemBadge: document.getElementById('systemBadgeText')?.value,
+                    primaryColor: document.getElementById('primaryColor')?.value,
+                    secondaryColor: document.getElementById('secondaryColor')?.value
+                };
+
+                // Save to localStorage
+                localStorage.setItem('crmSettings', JSON.stringify(formData));
+                showNotification('تم حفظ الإعدادات بنجاح!', 'success');
+            } catch (error) {
+                showNotification('خطأ في حفظ الإعدادات', 'error');
+            }
+        }
+
+        // Reset to defaults
+        function resetToDefaults() {
+            if (confirm('هل أنت متأكد من إعادة تعيين جميع الإعدادات إلى القيم الافتراضية؟')) {
+                localStorage.removeItem('crmSettings');
+                location.reload();
+            }
+        }
+
+        // Create backup
+        function createBackup() {
+            try {
+                const backupData = {
+                    settings: currentSettings,
+                    timestamp: new Date().toISOString(),
+                    version: '1.0'
+                };
+
+                const dataStr = JSON.stringify(backupData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = `crm-backup-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+
+                showNotification('تم إنشاء النسخة الاحتياطية وتحميلها', 'success');
+            } catch (error) {
+                showNotification('خطأ في إنشاء النسخة الاحتياطية', 'error');
+            }
+        }
+
+        // Show add user modal
+        function showAddUserModal() {
+            showNotification('سيتم فتح نافذة إضافة مستخدم جديد', 'info');
+        }
+
+        // Mobile sidebar toggle
+        function toggleMobileSidebar() {
+            // Implementation for mobile sidebar
+            showNotification('تم تفعيل القائمة الجانبية', 'info');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setupRealtimeUpdates();
+            updateColorPreview();
+            
+            // Load saved settings
+            const savedSettings = localStorage.getItem('crmSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                Object.keys(settings).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) element.value = settings[key];
+                });
+            }
+        });
+    </script>
+</body>
+</html>
